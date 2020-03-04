@@ -1,0 +1,5 @@
+.idea/
+.vs/
+achieve-backend/bin
+achieve-backend/obj
+achieve-backend/appsettings.json

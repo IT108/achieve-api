@@ -20,7 +20,7 @@ namespace achieve_backend.auth
 			{
 				conn.Bind();
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				result = false;
 			}

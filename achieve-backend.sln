@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "achieve-backend", "achieve-backend\achieve-backend.csproj", "{8FB5F96A-A965-4861-AF35-D0DD8DDE08C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "achieve-backend", "achieve-backend\achieve-backend.csproj", "{8FB5F96A-A965-4861-AF35-D0DD8DDE08C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "achieve-auth", "..\achieve-auth\achieve-auth.csproj", "{693BF3B0-7AE6-4995-99B5-069AD149A797}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "..\IdentityServer\IdentityServer.csproj", "{195A1B63-9A51-4D2B-A3FE-B785C9C810AA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "achieve-api", "achieve-api\achieve-api.csproj", "{CCA1F66D-D782-4BA0-9163-E0616E741B12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "achieve-ADagent", "achieve-ADagent\achieve-ADagent.csproj", "{722F13EE-7BF3-4958-A703-D747E878E4D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{8FB5F96A-A965-4861-AF35-D0DD8DDE08C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FB5F96A-A965-4861-AF35-D0DD8DDE08C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FB5F96A-A965-4861-AF35-D0DD8DDE08C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{693BF3B0-7AE6-4995-99B5-069AD149A797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{693BF3B0-7AE6-4995-99B5-069AD149A797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{693BF3B0-7AE6-4995-99B5-069AD149A797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{693BF3B0-7AE6-4995-99B5-069AD149A797}.Release|Any CPU.Build.0 = Release|Any CPU
+		{195A1B63-9A51-4D2B-A3FE-B785C9C810AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195A1B63-9A51-4D2B-A3FE-B785C9C810AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195A1B63-9A51-4D2B-A3FE-B785C9C810AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195A1B63-9A51-4D2B-A3FE-B785C9C810AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCA1F66D-D782-4BA0-9163-E0616E741B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCA1F66D-D782-4BA0-9163-E0616E741B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCA1F66D-D782-4BA0-9163-E0616E741B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCA1F66D-D782-4BA0-9163-E0616E741B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{722F13EE-7BF3-4958-A703-D747E878E4D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{722F13EE-7BF3-4958-A703-D747E878E4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{722F13EE-7BF3-4958-A703-D747E878E4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{722F13EE-7BF3-4958-A703-D747E878E4D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

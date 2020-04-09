@@ -46,6 +46,8 @@ namespace achieve_backend
 
 			services.AddSingleton<UserService>();
 
+			DefineDomains();
+
 			services.AddControllers().AddNewtonsoftJson(options => options.UseMemberCasing());
 
 			services.AddAuthentication("Bearer")
@@ -111,6 +113,12 @@ namespace achieve_backend
 			{
 				endpoints.MapControllers();
 			});
+		}
+
+		public void DefineDomains()
+		{
+			List<DomainModel> domains = new List<DomainModel>() { new DomainModel("it108.local", "IT108") };
+			DomainsConfig.DefineDomains(domains, Configuration);
 		}
 	}
 }

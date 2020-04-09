@@ -1,5 +1,8 @@
 .idea/
 .vs/
-achieve-backend/bin
-achieve-backend/obj
-achieve-backend/appsettings.json
+bin
+obj
+appsettings.Development.json
+.config
+
+achieve-backend.csproj.user

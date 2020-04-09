@@ -10,6 +10,7 @@ namespace achieve_backend.Models
 {
 	public class DomainModel
 	{
+		public static int KeyLength { get; set; } = 20;
 		public DomainModel(string domainName, string displayName, string key)
 		{
 			DomainName = domainName;
@@ -20,7 +21,7 @@ namespace achieve_backend.Models
 		public DomainModel(string domainName, string displayName)
 		{
 			DomainName = domainName;
-			Key = Utils.PasswordGenerator.Generate(20);
+			Key = Utils.PasswordGenerator.Generate(KeyLength, 0, requireNonAlphanumeric: false);
 			DisplayName = displayName;
 		}
 

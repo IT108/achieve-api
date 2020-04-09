@@ -49,7 +49,7 @@ namespace achieve_backend.Utils
             for (int i = chars.Count; i < requiredLength
                 || chars.Distinct().Count() < requiredUniqueChars; i++)
             {
-                string rcs = randomChars[rand.Next(0, randomChars.Length)];
+                string rcs = randomChars[rand.Next(0, randomChars.Length - 1)];
                 chars.Insert(rand.Next(0, chars.Count),
                     rcs[rand.Next(0, rcs.Length)]);
             }

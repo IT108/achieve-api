@@ -9,16 +9,16 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
-COPY . /src/achieve-backend/
+COPY . /src/achieve-api/
 
-WORKDIR "/src/achieve-backend"
-RUN dotnet restore "achieve-backend.csproj"
-RUN dotnet build "achieve-backend.csproj" -c Release -o /app/build
+WORKDIR "/src/achieve-api"
+RUN dotnet restore "achieve-api.csproj"
+RUN dotnet build "achieve-api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "achieve-backend.csproj" -c Release -o /app/publish
+RUN dotnet publish "achieve-api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "achieve-backend.dll"]
+ENTRYPOINT ["dotnet", "achieve-api.dll"]

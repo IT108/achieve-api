@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: achieve-api
+  name: achieve-api
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: achieve-api
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: '2020-04-10T21:27:49+03:00'
+      labels:
+        app: achieve-api
+    spec:
+      containers:
+        - env:
+            - name: EDGE_API_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  key: EDGE_API_TOKEN
+                  name: achieve-api-config-oinr
+            - name: EDGE_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: EDGE_ADDRESS
+                  name: achieve-api-config-oinr
+          image: gcr.io/achieve-master/github.com/paramonod/achieve-api
+          imagePullPolicy: IfNotPresent
+          name: achieve-api-1
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: achieve-api
+  name: achieve-api-hpa-iqpm
+  namespace: default
+spec:
+  maxReplicas: 5
+  metrics:
+    - resource:
+        name: cpu
+        targetAverageUtilization: 80
+      type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: achieve-api
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: achieve-api
+  name: achieve-api
+  namespace: default
+spec:
+  clusterIP: 10.0.11.35
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: achieve-api
+  sessionAffinity: None
+  type: ClusterIP

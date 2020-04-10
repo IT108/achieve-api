@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2020-04-10T18:05:41Z"
+  labels:
+    app: achieve-api
+  name: achieve-api
+  namespace: default
+  resourceVersion: "34176"
+  selfLink: /api/v1/namespaces/default/services/achieve-api
+  uid: 7a308ed8-5c8d-4b93-a119-89fb818d703f
+spec:
+  clusterIP: 10.0.11.35
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: achieve-api
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

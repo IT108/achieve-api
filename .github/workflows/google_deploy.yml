@@ -1,4 +1,4 @@
-name: Build and Deploy to Cloud Run
+name: Build and Deploy to GKE
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.RUN_PROJECT }}
   GKE_CLUSTER: achieve-cluster
-  GKE_ZONE: europe-north1
+  GKE_ZONE: europe-north1-b
   IMAGE: achieve-api
 
 

@@ -32,6 +32,11 @@ spec:
                 configMapKeyRef:
                   key: EDGE_ADDRESS
                   name: achieve-api-config-doeg
+            - name: DB_CONN_STRING
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_CONN_STRING
+                  name: achieve-api-config-doeg
           image: gcr.io/achieve-master/github.com/paramonod/achieve-api
           imagePullPolicy: IfNotPresent
           name: achieve-api-1

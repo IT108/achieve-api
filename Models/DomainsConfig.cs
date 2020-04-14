@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using achieve_backend.Services;
 
 namespace achieve_backend.Models
 {
@@ -28,10 +29,9 @@ namespace achieve_backend.Models
 			}
 		}
 
-		public static void DefineDomains(List<DomainModel> domainModels, IConfiguration configuration)
+		public static void DefineDomains(List<DomainModel> domainModels, IConfiguration configuration, DomainService _domains)
 		{
 			Configuration = configuration;
-
 			EdgeAddress = configuration["EDGE_ADDRESS"];
 			EdgeAPIToken = configuration["EDGE_API_TOKEN"];
 
@@ -39,7 +39,17 @@ namespace achieve_backend.Models
 				throw new AccessViolationException("Domains already defined");
 			foreach (DomainModel domain in domainModels)
 			{
-				domains.Add(domain.Key, domain);
+				DomainModel DBdomain = _domains.GetByDomain(domain.DomainName);
+				if (DBdomain == null)
+				{
+					DBdomain = _domains.Create(domain);
+				}
+				if (DBdomain.DomainName != domain.DomainName)
+				{
+					DBdomain.DomainName = domain.DomainName;
+					_domains.Update(DBdomain.Id, DBdomain);
+				}
+				domains.Add(DBdomain.Key, DBdomain);
 			}
 		}
 

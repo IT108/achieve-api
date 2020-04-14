@@ -8,6 +8,7 @@ namespace achieve_backend.Models
 	public class AchieveDBSettings : IAchieveDBSettings
 	{
 		public string UsersCollectionName { get; set; }
+		public string DomainCollectionName { get; set; }
 		public string ConnectionString { get; set; }
 		public string DatabaseName { get; set; }
 	}
@@ -15,6 +16,7 @@ namespace achieve_backend.Models
 	public interface IAchieveDBSettings
 	{
 		string UsersCollectionName { get; set; }
+		public string DomainCollectionName { get; set; }
 		string ConnectionString { get; set; }
 		string DatabaseName { get; set; }
 	}

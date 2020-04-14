@@ -25,6 +25,8 @@ namespace achieve_backend
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			Configuration["AchieveDBSettings:ConnectionString"] = Configuration["DB_CONN_STRING"];
+
 			services.Configure<AchieveDBSettings>(
 				Configuration.GetSection(nameof(AchieveDBSettings)));
 
@@ -32,8 +34,9 @@ namespace achieve_backend
 				sp.GetRequiredService<IOptions<AchieveDBSettings>>().Value);
 
 			services.AddSingleton<UserService>();
+			services.AddSingleton<DomainService>();
 
-			DefineDomains();
+			DefineDomains(services.BuildServiceProvider().GetService<DomainService>());
 
 			services.AddControllers().AddNewtonsoftJson(options => options.UseMemberCasing());
 
@@ -102,11 +105,11 @@ namespace achieve_backend
 			});
 		}
 
-		public void DefineDomains()
+		public void DefineDomains(DomainService ds)
 		{
 			DomainModel.KeyLength = int.Parse(Configuration["DOMAIN_KEY_LENGTH"]);
 			List<DomainModel> domains = new List<DomainModel>() { new DomainModel("it108.local", "IT108") };
-			DomainsConfig.DefineDomains(domains, Configuration);
+			DomainsConfig.DefineDomains(domains, Configuration, ds);
 		}
 	}
 }

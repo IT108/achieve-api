@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,6 +27,10 @@ namespace achieve_backend.Models
 			DisplayName = displayName;
 		}
 
+		[BsonId]
+		[BsonRepresentation(BsonType.ObjectId)]
+		public string Id { get ;set; }
+
 		[Required]
 		[JsonProperty("domain")]
 		public string DomainName { get; set; }
@@ -34,6 +40,7 @@ namespace achieve_backend.Models
 		public string DisplayName { get; set; }
 
 		[Required]
+		[JsonProperty("key")]
 		public string Key { get; set; }
 	}
 }

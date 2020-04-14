@@ -17,8 +17,6 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        kubectl.kubernetes.io/restartedAt: '2020-04-10T21:27:49+03:00'
       labels:
         app: achieve-api
     spec:
@@ -28,12 +26,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: EDGE_API_TOKEN
-                  name: achieve-api-config-oinr
+                  name: achieve-api-config-doeg
             - name: EDGE_ADDRESS
               valueFrom:
                 configMapKeyRef:
                   key: EDGE_ADDRESS
-                  name: achieve-api-config-oinr
+                  name: achieve-api-config-doeg
           image: gcr.io/achieve-master/github.com/paramonod/achieve-api
           imagePullPolicy: IfNotPresent
           name: achieve-api-1
@@ -43,7 +41,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   labels:
     app: achieve-api
-  name: achieve-api-hpa-iqpm
+  name: achieve-api-hpa-hdtu
   namespace: default
 spec:
   maxReplicas: 5

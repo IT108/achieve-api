@@ -33,7 +33,7 @@ namespace achieve_backend.Services
 
 		public void Update(string id, DomainModel domainIn) => _domains.ReplaceOne(domain => domain.Id == id, domainIn);
 
-		public void Remove(User domainIn) => _domains.DeleteOne(domain => domain.Id == domainIn.Id);
+		public void Remove(DomainModel domainIn) => _domains.DeleteOne(domain => domain.Id == domainIn.Id);
 
 		public void Remove(string id) => _domains.DeleteOne(domain => domain.Id == id);
 	}

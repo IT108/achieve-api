@@ -10,6 +10,8 @@ using achieve_backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using achieve_backend.Hubs;
+using Microsoft.AspNetCore.Http.Connections;
 
 namespace achieve_backend
 {
@@ -39,6 +41,8 @@ namespace achieve_backend
 			DefineDomains(services.BuildServiceProvider().GetService<DomainService>());
 
 			services.AddControllers().AddNewtonsoftJson(options => options.UseMemberCasing());
+
+			services.AddSignalR();
 
 			services.AddAuthentication("Bearer")
 		   .AddJwtBearer("Bearer", options =>
@@ -102,6 +106,11 @@ namespace achieve_backend
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+				endpoints.MapHub<AuthHub>("/auth", options =>
+				{
+					options.Transports =
+						HttpTransportType.WebSockets;
+				});
 			});
 		}
 

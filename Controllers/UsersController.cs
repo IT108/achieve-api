@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using achieve_backend.Services;
 using achieve_backend.Models;
-using achieve_backend.auth;
 
 
 namespace achieve_backend.Controllers

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http.Connections;
 using achieve_backend.Utils;
 using System;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Mvc.Cors;
 
 namespace achieve_backend
 {
@@ -61,9 +62,11 @@ namespace achieve_backend
 				// this defines a CORS policy called "default"
 				options.AddPolicy("default", policy =>
 				{
-					policy.WithOrigins("http://localhost:5003")
+					policy
+						.WithOrigins("https://localhost:4200", "http://localhost:4200", "http://localhost:5011")
 						.AllowAnyHeader()
-						.AllowAnyMethod();
+						.AllowAnyMethod()
+						.AllowCredentials();
 				});
 			});
 
@@ -109,12 +112,12 @@ namespace achieve_backend
 
 			app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapControllers();
+				endpoints.MapControllers().RequireCors("default");
 				endpoints.MapHub<AuthHub>("/hubs/auth", options =>
 				{
 					options.Transports =
 						HttpTransportType.WebSockets;
-				});
+				}).RequireCors("default");
 			});
 
 			app.Use(async (context, next) =>

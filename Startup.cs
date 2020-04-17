@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using achieve_backend.Hubs;
 using Microsoft.AspNetCore.Http.Connections;
+using achieve_backend.Utils;
+using System;
+using Microsoft.AspNetCore.SignalR;
 
 namespace achieve_backend
 {
@@ -81,6 +84,7 @@ namespace achieve_backend
 					.Build();
 				options.Filters.Add(new AuthorizeFilter(policy));
 			});
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,11 +110,17 @@ namespace achieve_backend
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
-				endpoints.MapHub<AuthHub>("/auth", options =>
+				endpoints.MapHub<AuthHub>("/hubs/auth", options =>
 				{
 					options.Transports =
 						HttpTransportType.WebSockets;
 				});
+			});
+
+			app.Use(async (context, next) =>
+			{
+				Edge.ConfigureEdge(Configuration ,context.RequestServices
+										.GetRequiredService<IHubContext<AuthHub>>());
 			});
 		}
 

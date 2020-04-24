@@ -25,8 +25,8 @@ jobs:
     runs-on: whale
     steps:
     - name: Login to packages
-    run: |
-      echo  ${{ secrets.REGISTRY_TOKEN }} |  docker login docker.pkg.github.com -u ${{ github.ACTOR }} --password-stdin
-    - name: deploy
-    run: |
-      docker-compose up -d
+      run: |
+        echo  ${{ secrets.REGISTRY_TOKEN }} |  docker login docker.pkg.github.com -u ${{ github.ACTOR }} --password-stdin
+    - name: deploy 
+      run: |
+        docker-compose up -d

@@ -7,17 +7,30 @@ using achieve_backend.Models;
 using IdentityServer4;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Cors;
+using achieve_lib.AD;
 
 namespace achieve_backend.Controllers
 {
-	[Route("identity")]
-	[Authorize]
+	[ApiController]
 	public class IdentityController : ControllerBase
 	{
+		[Route("[controller]/updateGroups")]
 		[HttpGet]
-		public IActionResult Get()
+		[AllowAnonymous]
+		public IActionResult Get([FromQuery] [Required] string username)
 		{
-			return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
+			return Ok();
+		}
+
+		[EnableCors("default")]
+		[Route("[controller]/identityCheck")]
+		[HttpGet]
+		[Authorize]
+		public IActionResult GetIdent()
+		{
+			return Ok("Authenticated");
 		}
 	}
 }

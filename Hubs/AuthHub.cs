@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using achieve_lib;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using achieve_backend.Models;
 
 namespace achieve_backend.Hubs
 {
@@ -14,9 +16,10 @@ namespace achieve_backend.Hubs
 	[EnableCors("default")]
 	public class AuthHub : Hub
 	{
+		[EnableCors("default")]
 		public async Task Connect(ADAuthRequest req)
 		{
 			Edge.ADAuth(req.Domain, req.Username, req.Password, Context.ConnectionId);
 		}
-	}
+    }
 }

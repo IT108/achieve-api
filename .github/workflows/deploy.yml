@@ -20,13 +20,19 @@ jobs:
         password: ${{ secrets.REGISTRY_TOKEN }}
         registry: docker.pkg.github.com
         tags: "latest,${{ github.SHA }}"
-
-  deploy:
-    runs-on: whale
-    steps:
-    - name: Login to packages
-      run: |
-        echo  ${{ secrets.REGISTRY_TOKEN }} |  docker login docker.pkg.github.com -u ${{ github.ACTOR }} --password-stdin
-    - name: deploy 
-      run: |
-        docker-compose up -d
+   - name: Deploy package to digitalocean
+      uses: appleboy/ssh-action@master
+      env:
+          GITHUB_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+          EDGE_API_TOKEN: ${{API_TOKEN}}
+          EDGE_ADDRESS: ${{EDGE_ADDRESS}}
+          DB_CONN_STRING: ${{DB_CONN_STRING}}
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        envs: GITHUB_USERNAME, GITHUB_TOKEN, EDGE_API_TOKEN, EDGE_ADDRESS, DB_CONN_STRING
+        script: |
+          echo $GITHUB_TOKEN | docker login docker.pkg.github.com -u $GITHUB_USERNAME --password-stdin
+          docker-compose up -d

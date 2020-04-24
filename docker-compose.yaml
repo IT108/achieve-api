@@ -2,7 +2,7 @@ version: '3'
 
 services:
   achieve_api:
-    image: FROM docker.pkg.github.com/io112/achieve-api/achieve-api:${GITHUB_SHA}
+    image: docker.pkg.github.com/io112/achieve-api/achieve-api:${GITHUB_SHA}
     container_name: achieve_api
     environment:
         EDGE_API_TOKEN: ${API_TOKEN}

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace achieve_backend.Utils
 {
@@ -71,6 +72,37 @@ namespace achieve_backend.Utils
 			connection.On<ADAuthRequest>("UserInfo", new Action<ADAuthRequest>(OnGetUser));
 		}
 
+		private static async Task<bool> ConnectToSignalRServer()
+		{
+			Console.WriteLine("Trying to connect");
+			bool connected = false;
+			try
+			{
+				await connection.StartAsync();
+
+				if (connection.State == HubConnectionState.Connected)
+				{
+					connected = true;
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+			}
+			return connected;
+		}
+
+		public async static Task TryConnect()
+		{
+			while (true)
+			{
+				bool connected = await ConnectToSignalRServer();
+				if (connected)
+					return;
+				Thread.Sleep(1000);
+			}
+		}
+
 		public static async void ADAuth(string domain, string login, string password, string caller)
 		{
 			ADAuthRequest request = new ADAuthRequest()
@@ -81,7 +113,7 @@ namespace achieve_backend.Utils
 				Password = password
 			};
 			if (connection.State != HubConnectionState.Connected)
-				await Connect();
+				await TryConnect();
 			
 			pending.Add(request.RequestNumber, caller);
 			connection.InvokeAsync("GetUser", request);

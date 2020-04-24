@@ -11,5 +11,6 @@ namespace achieve_backend.Hubs
 	[Authorize]
 	public class UserHub
 	{
+
 	}
 }

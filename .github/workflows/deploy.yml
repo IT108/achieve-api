@@ -15,7 +15,8 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: ${{ github.REPOSITORY }}/${{ github.SHA }}
+        name: ${{ github.REPOSITORY }}/achieve-api
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_TOKEN }}
         registry: docker.pkg.github.com
+        tags: "latest,${{ github.SHA }}"

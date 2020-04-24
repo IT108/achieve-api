@@ -20,3 +20,12 @@ jobs:
         password: ${{ secrets.REGISTRY_TOKEN }}
         registry: docker.pkg.github.com
         tags: "latest,${{ github.SHA }}"
+
+  deploy:
+    runs-on: whale
+    steps:
+    - uses: actions/checkout@master
+    - name: Pull image
+    run: |
+      echo  ${{ secrets.REGISTRY_TOKEN }} |  docker login docker.pkg.github.com -u ${{ github.ACTOR }} --password-stdin
+      docker-compose up -d

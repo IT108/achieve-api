@@ -20,7 +20,7 @@ jobs:
         password: ${{ secrets.REGISTRY_TOKEN }}
         registry: docker.pkg.github.com
         tags: "latest,${{ github.SHA }}"
-   - name: Deploy package to digitalocean
+    - name: Deploy package
       uses: appleboy/ssh-action@master
       env:
           GITHUB_USERNAME: ${{ secrets.REGISTRY_USERNAME }}

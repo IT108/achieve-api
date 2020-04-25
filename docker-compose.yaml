@@ -5,9 +5,9 @@ services:
     image: docker.pkg.github.com/io112/achieve-api/achieve-api:${GITHUB_SHA}
     container_name: achieve_api
     environment:
-        EDGE_API_TOKEN: ${SECRETS_API_TOKEN}
-        EDGE_ADDRESS: ${SECRETS_EDGE_ADDRESS}
-        DB_CONN_STRING: ${SECRETS_DB_CONN_STRING}
+        EDGE_API_TOKEN: ${API_TOKEN}
+        EDGE_ADDRESS: ${EDGE_ADDRESS}
+        DB_CONN_STRING: ${DB_CONN_STRING}
     ports:
       - "${API_PORT_PROD}:80"
     restart: always

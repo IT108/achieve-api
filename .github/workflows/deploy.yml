@@ -25,11 +25,11 @@ jobs:
     runs-on: whale
     #needs: build
     steps:
+    - uses: actions/checkout@master
     - name: Login to packages
       run: |
         whoami
         echo  ${{ secrets.REGISTRY_TOKEN }} |  docker login docker.pkg.github.com -u ${{ github.ACTOR }} --password-stdin
-    - uses: actions/checkout@master
     - name: deploy
       run: |
         docker-compose up -d

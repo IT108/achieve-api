@@ -11,6 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@master
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
@@ -21,13 +22,12 @@ jobs:
         tags: "latest,${{ github.SHA }}"
 
   deploy:
-    needs: build
     runs-on: whale
+    needs: build
     steps:
-    - uses: actions/checkout@master
     - name: Login to packages
       run: |
         echo  ${{ secrets.REGISTRY_TOKEN }} |  docker login docker.pkg.github.com -u ${{ github.ACTOR }} --password-stdin
-    - name: deploy 
+    - name: deploy
       run: |
         docker-compose up -d

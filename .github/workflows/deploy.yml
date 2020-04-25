@@ -29,7 +29,7 @@ jobs:
       run: |
         whoami
         echo  ${{ secrets.REGISTRY_TOKEN }} |  docker login docker.pkg.github.com -u ${{ github.ACTOR }} --password-stdin
+    - uses: actions/checkout@master
     - name: deploy
       run: |
-        whoami
         docker-compose up -d

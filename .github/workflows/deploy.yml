@@ -8,29 +8,29 @@ on:
 
 
 jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Publish to Registry
-#      uses: elgohr/Publish-Docker-Github-Action@master
-#      with:
-#        name: ${{ github.REPOSITORY }}/achieve-api
-#        username: ${{ secrets.REGISTRY_USERNAME }}
-#        password: ${{ secrets.REGISTRY_TOKEN }}
-#        registry: docker.pkg.github.com
-#        tags: "latest,${{ github.SHA }}"
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: ${{ github.REPOSITORY }}/achieve-api
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_TOKEN }}
+        registry: docker.pkg.github.com
+        tags: "latest,${{ github.SHA }}"
 
   deploy:
     runs-on: whale
-    #needs: build
+    needs: build
     steps:
     - uses: actions/checkout@master
     - name: Login to packages
       run: |
         echo  ${{ secrets.REGISTRY_TOKEN }} |  docker login docker.pkg.github.com -u ${{ github.ACTOR }} --password-stdin
     - name: deploy
-      env: # Or as an environment variable
+      env:
         API_TOKEN: ${{ secrets.API_TOKEN }}
         EDGE_ADDRESS: ${{ secrets.EDGE_ADDRESS }}
         DB_CONN_STRING: ${{ secrets.DB_CONN_STRING }}

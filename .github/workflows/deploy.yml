@@ -27,12 +27,12 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Login to packages
+      run: |
+        echo  ${{ secrets.REGISTRY_TOKEN }} |  docker login docker.pkg.github.com -u ${{ github.ACTOR }} --password-stdin
+    - name: deploy
       env: # Or as an environment variable
         EDGE_API_TOKEN: ${{ secrets.API_TOKEN }}
         EDGE_ADDRESS: ${{ secrets.EDGE_ADDRESS }}
         DB_CONN_STRING: ${{ secrets.DB_CONN_STRING }}
-      run: |
-        echo  ${{ secrets.REGISTRY_TOKEN }} |  docker login docker.pkg.github.com -u ${{ github.ACTOR }} --password-stdin
-    - name: deploy
       run: |
         docker-compose up -d

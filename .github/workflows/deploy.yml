@@ -36,4 +36,4 @@ jobs:
         DB_CONN_STRING: ${{ secrets.DB_CONN_STRING }}
         API_PORT_PROD: ${{ secrets.API_PORT_PROD }}
       run: |
-        podman-compose up
+        docker-compose up

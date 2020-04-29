@@ -135,7 +135,7 @@ namespace achieve_backend
 		private void DefineDomains(DomainService ds)
 		{
 			DomainModel.KeyLength = int.Parse(Configuration["DOMAIN_KEY_LENGTH"]);
-			List<DomainModel> domains = new List<DomainModel>() { new DomainModel("it108.local", "IT108") };
+			List<DomainModel> domains = new List<DomainModel>() { new DomainModel("it108.org", "IT108") };
 			DomainsConfig.DefineDomains(domains, Configuration, ds);
 		}
 	}

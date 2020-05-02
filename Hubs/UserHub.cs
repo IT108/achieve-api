@@ -30,6 +30,9 @@ namespace achieve_backend.Hubs
 			foreach (var claim in Context.User.Claims)
 				System.Console.WriteLine(claim.Type + " " + claim.Value);
 			System.Console.WriteLine(Context.User.IsInRole("Student"));
+
+			if (user is null)
+				Clients.Caller.SendAsync("GetUser", null);
 			Clients.Caller.SendAsync("GetUser", user);
 		}
 	}

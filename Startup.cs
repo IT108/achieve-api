@@ -16,6 +16,9 @@ using achieve_backend.Utils;
 using System;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Mvc.Cors;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace achieve_backend
 {
@@ -57,6 +60,36 @@ namespace achieve_backend
 			   options.Audience = "achieve-api";
 		   });
 
+			services.AddAuthentication("access_token")
+			.AddJwtBearer("access_token", options =>
+			{
+				options.Authority = "http://localhost:5000";
+				options.RequireHttpsMetadata = false;
+				options.Audience = "achieve-api";
+				options.Events = new JwtBearerEvents
+				{
+					OnMessageReceived = context =>
+					{
+						var accessToken = context.Request.Query["access_token"];
+
+						// If the request is for our hub...
+						var path = context.HttpContext.Request.Path;
+						if (!string.IsNullOrEmpty(accessToken) &&
+							(path.StartsWithSegments("/hubs/users")))
+						{
+							// Read the token out of the query string
+							context.Token = accessToken;
+						}
+						return Task.CompletedTask;
+					}
+				};
+			});
+
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("Student", policy => policy.RequireClaim(ClaimTypes.Role, "Student"));
+			});
+
 			services.AddCors(options =>
 			{
 				// this defines a CORS policy called "default"
@@ -76,9 +109,6 @@ namespace achieve_backend
 				options.CheckConsentNeeded = context => true;
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
-
-
-			services.AddAuthentication();
 
 			services.AddMvc(options =>
 			{
@@ -118,12 +148,16 @@ namespace achieve_backend
 					options.Transports =
 						HttpTransportType.WebSockets;
 				}).RequireCors("default");
+				endpoints.MapHub<UserHub>("/hubs/users", options =>
+				{
+					options.Transports =
+						HttpTransportType.WebSockets;
+				}).RequireCors("default");
 			});
-
 			app.Use(async (context, next) =>
 			{
-				Edge.ConfigureEdge(Configuration ,context.RequestServices
-										.GetRequiredService<IHubContext<AuthHub>>());
+				await Edge.ConfigureEdge(Configuration, context.RequestServices
+						.GetRequiredService<IHubContext<AuthHub>>());
 			});
 		}
 

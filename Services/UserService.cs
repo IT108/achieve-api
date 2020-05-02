@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using achieve_lib.AD;
+using achieve_lib.BL;
 
 namespace achieve_backend.Services
 {
@@ -23,6 +23,8 @@ namespace achieve_backend.Services
 		public List<User> Get() => _users.Find(user => true).ToList();
 
 		public User Get(string id) => _users.Find<User>(user => user.Id == id).FirstOrDefault();
+
+		public User GetByIdentity(string id) => _users.Find<User>(user => user.IdentityId == id).FirstOrDefault();
 
 		public User Create(User user)
 		{

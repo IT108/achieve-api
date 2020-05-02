@@ -24,7 +24,7 @@ namespace achieve_backend.Utils
 
 		private static HubConnection connection;
 
-		public static void ConfigureEdge(IConfiguration configuration, IHubContext<AuthHub> hub)
+		public static async Task<bool> ConfigureEdge(IConfiguration configuration, IHubContext<AuthHub> hub)
 		{
 
 			edgeAddress = configuration["EDGE_ADDRESS"];
@@ -41,6 +41,8 @@ namespace achieve_backend.Utils
 				.Build();
 
 			RegisterHandlers();
+
+			return true;
 		}
 
 		public async static Task Connect()
@@ -121,8 +123,8 @@ namespace achieve_backend.Utils
 
 		private static void OnGetUser(ADAuthRequest response)
 		{
+			response.ApiKey = "";
 			authHub.Clients.Client(pending[response.RequestNumber]).SendAsync("Connect", response);
-			//TODO: обработка респонса
 		}
 	}
 }

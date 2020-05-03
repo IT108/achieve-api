@@ -54,7 +54,7 @@ namespace achieve_backend
 			services.AddAuthentication("Bearer")
 		   .AddJwtBearer("Bearer", options =>
 		   {
-			   options.Authority = "http://localhost:5000";
+			   options.Authority = "https://auth.it108.org";
 			   options.RequireHttpsMetadata = false;
 
 			   options.Audience = "achieve-api";
@@ -63,7 +63,7 @@ namespace achieve_backend
 			services.AddAuthentication("access_token")
 			.AddJwtBearer("access_token", options =>
 			{
-				options.Authority = "http://localhost:5000";
+				options.Authority = "https://auth.it108.org";
 				options.RequireHttpsMetadata = false;
 				options.Audience = "achieve-api";
 				options.Events = new JwtBearerEvents
@@ -96,7 +96,7 @@ namespace achieve_backend
 				options.AddPolicy("default", policy =>
 				{
 					policy
-						.WithOrigins("https://localhost:4200", "http://localhost:4200", "http://localhost:5011")
+						.WithOrigins("https://localhost:4200", "http://localhost:4200", "https://auth.it108.org")
 						.AllowAnyHeader()
 						.AllowAnyMethod()
 						.AllowCredentials();

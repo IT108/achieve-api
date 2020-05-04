@@ -1,9 +1,11 @@
 ﻿using achieve_backend.Services;
 using achieve_lib.BL;
+using achieve_lib.Requests;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Linq;
@@ -25,15 +27,21 @@ namespace achieve_backend.Hubs
 		//[Authorize("Student")]
 		public async Task GetUser()
 		{
-			System.Console.WriteLine(Context.UserIdentifier);
 			User user = _userService.GetByIdentity(Context.UserIdentifier);
-			foreach (var claim in Context.User.Claims)
-				System.Console.WriteLine(claim.Type + " " + claim.Value);
-			System.Console.WriteLine(Context.User.IsInRole("Student"));
-
 			if (user is null)
 				Clients.Caller.SendAsync("GetUser", null);
 			Clients.Caller.SendAsync("GetUser", user);
+		}
+
+		public async Task UpdateUser(UpdateUserRequest request)
+		{
+			User user = _userService.GetByIdentity(Context.UserIdentifier);
+			if (user is null)
+				Clients.Caller.SendAsync("UpdateUser", StatusCodes.Status404NotFound);
+
+			user.UpdateUser(request);
+			_userService.Update(user.Id, user);
+			Clients.Caller.SendAsync("UpdateUser", StatusCodes.Status200OK);
 		}
 	}
 }
